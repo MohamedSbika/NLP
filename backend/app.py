@@ -43,6 +43,18 @@ def summarize_pdf():
 
     return jsonify({"summary": summary[0]['summary_text']})
 
+
+@app.route('/summarize', methods=['POST'])
+def summarize_text():
+    data = request.json  
+    text = data.get('text') 
+    
+        return jsonify({"error": "No text provided"}), 400
+
+    summary = summarizer(text, max_length=200, min_length=50, do_sample=False)
+    
+    return jsonify({"summary": summary[0]['summary_text']})
+
 @app.route('/translate_en_to_fr', methods=['POST'])
 def translate_en_to_fr():
     data = request.json  
